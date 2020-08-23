@@ -1,0 +1,81 @@
+body {
+  padding: 40px;
+}
+
+.like {
+  cursor: pointer;
+  display: inline-flex;
+  /* ↑display: flex;でinline-blockということ？ */
+  justify-content: center;
+  align-items: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  transition: background .5s;
+}
+
+.like:hover {
+  background: #f5f5f5;
+}
+
+.like [type="checkbox"] {
+  display: none;
+}
+
+.heart {
+  font-size: 40px;
+  color: #e4e4e4;
+  user-select: none;
+  position: relative;
+  top: 1px;
+  /* ↑微妙な位置調整をしたいためにposition: relative;を設定して調整 */
+}
+
+.like [type="checkbox"]:checked ~ .heart {
+  animation: heart;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+  /* ↑では like の配下にある type 属性がcheckboxの要素がチェックされたとき、その兄弟要素である heart クラスがついた要素はこのスタイルにしてね、と書いてあげます */
+}
+
+@keyframes heart {
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+    color: red;
+  }
+}
+
+.ripple {
+  width: 85px;
+  height: 85px;
+  background: red;
+  border-radius: 50%;
+  transform: scale(0);
+  position: absolute;
+  /* ↑rippleを絶対配置することで通常の配置から外れるが、親要素のflexboxの指定に影響されるので、ハートと同じ位置で、中央揃えになる。 */
+}
+
+.like [type="checkbox"]:checked ~ .ripple {
+  animation: ripple;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+  }
+
+@keyframes ripple {
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0;
+  }
+}
